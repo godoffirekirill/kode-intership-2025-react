@@ -1,4 +1,3 @@
-// components/UserList.tsx
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,9 +6,9 @@ import { useAppSelector } from '../redux/hooks.ts';
 import { userAction } from '../redux/slices/contentAction.ts';
 import { clearError } from '../redux/slices/contentSlice.ts';
 import { Roles, RouteType } from '../until/types.ts';
-import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Skeleton, Typography } from '@mui/material';
-import ErrorModal from "./servicePages/ErrorModal.tsx";
+import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Skeleton, Typography, Snackbar, Alert } from '@mui/material';
 import { useTranslation } from "react-i18next";
+
 type Props = {
     items: RouteType[];
 };
@@ -30,7 +29,10 @@ const UserList: React.FC<Props> = ({ items }) => {
         setAvatarErrors((prev) => ({ ...prev, [userId]: true }));
     };
 
-    const handleCloseModal = () => {
+    const handleCloseSnackbar = (_event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickable') {
+            return; // Prevents closing when clicking outside
+        }
         dispatch(clearError());
     };
 
@@ -98,7 +100,21 @@ const UserList: React.FC<Props> = ({ items }) => {
                     )}
                 </List>
             </Box>
-            <ErrorModal error={error} onClose={handleCloseModal} />
+            <Snackbar
+                open={!!error}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert
+                    onClose={handleCloseSnackbar}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {error ? t(`error.${error === "Request failed with status code 404" ? "404" : "unknown"}`) : ""}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

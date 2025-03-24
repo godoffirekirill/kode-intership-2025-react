@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { userAction } from "./contentAction.ts";
+import { userAction } from "./contentAction.ts"; // Assuming this is the correct import; adjust if it's "./userAction.ts"
 import { User } from "../../until/types.ts";
 
 interface UsersState {
@@ -11,7 +11,7 @@ interface UsersState {
     sortFilter: "alphabet" | "birthday";
 }
 
-// Функция для получения начального состояния из localStorage
+// Function to get initial state from localStorage
 const getInitialState = (): UsersState => {
     const cachedState = localStorage.getItem("usersState");
     if (cachedState) {
@@ -44,24 +44,21 @@ const usersSlice = createSlice({
     reducers: {
         setSearchQuery: (state, action: PayloadAction<string>) => {
             state.searchQuery = action.payload;
-            const filtered = state.users.filter(user =>
+            const filtered = state.users.filter((user) =>
                 `${user.firstName} ${user.lastName}`
                     .toLowerCase()
                     .includes(action.payload.toLowerCase())
             );
             state.filteredUsers = sortUsers(filtered, state.sortFilter);
-            // Сохраняем состояние в localStorage
             localStorage.setItem("usersState", JSON.stringify(state));
         },
         setSortFilter: (state, action: PayloadAction<"alphabet" | "birthday">) => {
             state.sortFilter = action.payload;
             state.filteredUsers = sortUsers(state.filteredUsers, action.payload);
-            // Сохраняем состояние в localStorage
             localStorage.setItem("usersState", JSON.stringify(state));
         },
         clearError: (state) => {
             state.error = null;
-            // Сохраняем состояние в localStorage
             localStorage.setItem("usersState", JSON.stringify(state));
         },
     },
@@ -75,20 +72,22 @@ const usersSlice = createSlice({
                 state.loading = false;
                 state.users = action.payload;
                 const filtered = state.searchQuery
-                    ? action.payload.filter(user =>
+                    ? action.payload.filter((user) =>
                         `${user.firstName} ${user.lastName}`
                             .toLowerCase()
                             .includes(state.searchQuery.toLowerCase())
                     )
                     : action.payload;
                 state.filteredUsers = sortUsers(filtered, state.sortFilter);
-                // Сохраняем состояние в localStorage
                 localStorage.setItem("usersState", JSON.stringify(state));
             })
             .addCase(userAction.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.error.message || "Failed to fetch users";
-                // Сохраняем состояние в localStorage
+                // Log both action.payload and action.error for debugging
+                console.log("Rejected payload:", action.payload);
+                console.log("Rejected error:", action.error);
+                // Use action.payload if available (from rejectWithValue), otherwise fall back to action.error.message
+                state.error = (action.payload as string) || action.error.message || "Failed to fetch users";
                 localStorage.setItem("usersState", JSON.stringify(state));
             });
     },

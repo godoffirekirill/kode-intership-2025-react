@@ -19,7 +19,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ error, onClose }) => {
             case 'Request failed with status code 404':
                 return t("error.404");
             default:
-                console.log(error);
+                 console.log(error);
                 return t("error.unknown");
         }
     };
