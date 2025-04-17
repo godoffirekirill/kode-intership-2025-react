@@ -27,7 +27,15 @@
 - ✅ Архитектура в стиле Feature-Sliced Design
 
 ## 🖥 Скриншоты:
-https://github.com/godoffirekirill/kode-intership-2025-react/blob/main/screenshots/Screenshot%202025-04-17%20at%2007.53.11.png?raw=true
+![Главный экран](https://github.com/godoffirekirill/kode-intership-2025-react/blob/497425e56498d8d4f15c5b500b3ea77f94195779/screenshots/Screenshot%202025-04-17%20at%2007.53.11.png?raw=true)
+![Сортировка](https://github.com/godoffirekirill/kode-intership-2025-react/blob/main/screenshots/Screenshot%202025-04-17%20at%2007.54.25.png?raw=true)
+
+![Темная тема](https://github.com/godoffirekirill/kode-intership-2025-react/blob/main/screenshots/Screenshot%202025-04-17%20at%2008.20.16.png?raw=true)
+
+![Темная тема 2](https://github.com/godoffirekirill/kode-intership-2025-react/blob/main/screenshots/Screenshot%202025-04-17%20at%2008.20.26.png?raw=true)
+
+
+
 
 
 ## 🔧 Установка и запуск проекта:
